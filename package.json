@@ -1,0 +1,21 @@
+{
+  "name": "replace-async",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "",
+  "license": "VOL",
+  "dependencies": {
+    "after-all": "^2.0.2",
+    "is-nil": "^1.0.1",
+    "next-tick": "^1.0.0"
+  },
+  "devDependencies": {
+    "interpolate-regex": "^1.0.0",
+    "tape": "^4.6.2"
+  }
+}
