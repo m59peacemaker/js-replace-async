@@ -37,9 +37,20 @@ test('replacement function, one simple string/pattern', t => {
   )
 })
 
-// test('arguments passed to replacer function
-
-//})
+test('arguments passed to replacer function are same as string.replace', t => {
+  t.plan(2)
+  const expected = []
+  const string = `
+    {{foo}}
+    {{bar}}
+  `
+  const pattern = Regex('{{', '}}')
+  string.replace(pattern, (...args) => expected.push(args))
+  replace(string, pattern, (done, ...args) => {
+    t.deepEqual(args, expected[t.assertCount])
+    done()
+  }, () => {})
+})
 
 test('replacement function, complex', t => {
   t.plan(2)
@@ -74,4 +85,45 @@ test('replacement function, complex', t => {
       t.equal(result, expected)
     }
   )
+})
+
+test('collects errors', t => {
+  t.plan(1)
+  replace('1 2', /\d/g, (done, match) => {
+    match === '2' ? done('error') : done(undefined, match)
+  }, (errors, result) => {
+    t.deepEqual(errors, [undefined, 'error'])
+  })
+})
+
+test('no result when there are errors', t => {
+  t.plan(1)
+  replace('1 2', /\d/g, (done, match) => {
+    match === '2' ? done('error') : done(undefined, match)
+  }, (errors, result) => {
+    t.equal(result, undefined, 'no result')
+  })
+})
+
+
+test('ignoreErrors: true, has result', t => {
+  t.plan(2)
+  const data = {foo: 'abc'}
+  replace('{{foo}} {{fail}}', Regex('{{', '}}'), (done, _, contents) => {
+    const value = data[contents]
+    value ? done(undefined, value) : done(contents)
+  }, {ignoreErrors: true}, (errors, result) => {
+    t.deepEqual(errors, [undefined, 'fail'])
+    t.equal(result, 'abc ')
+  })
+})
+
+test('throws error if no cb given', t => {
+  t.plan(1)
+  try {
+    replace('foo', 'foo', '')
+    t.fail('did not throw error')
+  } catch (err) {
+    t.pass('threw error: ' + err)
+  }
 })
