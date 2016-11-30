@@ -127,3 +127,23 @@ test('throws error if no cb given', t => {
     t.pass('threw error: ' + err)
   }
 })
+
+test('replacement string, calls callback with original value when there is nothing to replace', t => {
+  t.plan(2)
+  const input = 'hey jude'
+  replace(input, /^yo/, 'bye', (errors, result) => {
+    t.equal(errors, undefined)
+    t.equal(result, input)
+  })
+})
+
+test('replacement function, calls callback with original value when there is nothing to replace', t => {
+  t.plan(2)
+  const input = 'hey jude'
+  replace(input, /^yo/, (done, match) => {
+    t.fail('called the replacer, but there is nothing to replace!')
+  }, (errors, result) => {
+    t.equal(errors, undefined)
+    t.equal(result, input)
+  })
+})

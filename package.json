@@ -1,6 +1,6 @@
 {
   "name": "replace-async",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Like `string.replace`, but with asynchronous, concurrent replacement.",
   "keywords": [
     "string",

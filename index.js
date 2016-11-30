@@ -59,9 +59,13 @@ var replace = function (string, pattern, replacement, options, cb) {
   options = options || {}
   var fn = typeof replacement === 'function' ? functionReplacement : stringReplacement
   fn(string, pattern, replacement, function (functions, processResults) {
-    concurrent(functions, {ignoreErrors: options.ignoreErrors}, function (errors, results) {
-      processResults(errors, results, cb)
-    })
+    if (functions.length === 0) {
+      cb(undefined, string)
+    } else {
+      concurrent(functions, {ignoreErrors: options.ignoreErrors}, function (errors, results) {
+        processResults(errors, results, cb)
+      })
+    }
   }, options)
 }
 
