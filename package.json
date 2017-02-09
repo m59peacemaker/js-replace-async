@@ -1,6 +1,6 @@
 {
   "name": "replace-async",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Like `string.replace`, but with asynchronous, concurrent replacement.",
   "keywords": [
     "string",
@@ -27,7 +27,7 @@
     "type": "git",
     "url": "https://github.com/m59peacemaker/js-replace-async"
   },
-  "license": "VOL",
+  "license": "CC0-1.0",
   "dependencies": {
     "concurrent-clean": "^1.0.0",
     "is-nil": "^1.0.1",
